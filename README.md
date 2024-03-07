@@ -290,7 +290,7 @@ description: # can be multiline, see syntax here https://yaml-multiline.info/
 # or category ID (e.g. 161/27)
 category: Notebooks
 
-price:
+price: # without decimals, e.g. 75
 price_type: # one of: FIXED, NEGOTIABLE, GIVE_AWAY
 
 special_attributes:

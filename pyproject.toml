@@ -34,11 +34,11 @@ requires-python = ">=3.10,<3.13" # <3.12 required for pyinstaller
 dependencies = [
     "colorama~=0.4",
     "coloredlogs~=15.0",
+    "nodriver>=0.27rc1",
     "overrides~=7.4",
     "ruamel.yaml~=0.18",
+    "psutil",
     "pywin32==306; sys_platform == 'win32'",
-    "selenium~=4.18",
-    "selenium_stealth~=1.0",
     "wcmatch~=8.5",
 ]
 
@@ -66,9 +66,10 @@ dev = [
     "tomli", # required by bandit
     "pydantic~=2.6",
     "pytest~=8.1",
+    "pytest-asyncio~=0.23",
     "pyinstaller~=6.4",
-    "psutil",
     "pylint~=3.1",
+    "pyright~=1.1",
     "mypy~=1.8",
 ]
 
@@ -117,6 +118,7 @@ aggressive = 3
 # https://mypy.readthedocs.io/en/stable/config_file.html
 #mypy_path = "$MYPY_CONFIG_FILE_DIR/tests/stubs"
 python_version = "3.10"
+files = "src,tests"
 strict = true
 disallow_untyped_calls = false
 disallow_untyped_defs = true
@@ -125,6 +127,18 @@ ignore_missing_imports = true
 show_error_codes = true
 warn_unused_ignores = true
 verbosity = 0
+
+
+#####################
+# pyright
+# https://github.com/microsoft/pyright/
+#####################
+[tool.pyright]
+# https://microsoft.github.io/pyright/#/configuration?id=main-configuration-options
+include = ["src", "tests"]
+defineConstant = { DEBUG = false }
+pythonVersion = "3.10"
+typeCheckingMode = "standard"
 
 
 #####################
@@ -190,6 +204,7 @@ disable= [
     "multiple-imports",
     "multiple-statements",
     "no-self-use",
+    "no-member", # pylint cannot find async methods from super class
     "too-few-public-methods"
 ]
 

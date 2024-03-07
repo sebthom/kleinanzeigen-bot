@@ -114,7 +114,9 @@ jobs:
 
 
     - name: Check code style
-      run: pdm run lint
+      run: |
+        pdm run lint
+        pdm run mypy
 
 
     - name: Run unit tests
