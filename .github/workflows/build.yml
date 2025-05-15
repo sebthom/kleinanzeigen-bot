@@ -260,6 +260,35 @@ jobs:
         docker image tag $image_name ghcr.io/$image_name
         docker push ghcr.io/$image_name
 
+    - name: Upload unit-test coverage to Codecov
+      uses: codecov/codecov-action@v5  # https://github.com/codecov/codecov-action
+      if: ${{ github.ref_name == 'main' || github.event_name == 'pull_request' }}
+      with:
+        files: .temp/coverage-unit.xml
+        flags: unit
+        env_vars: OS,PYTHON
+        name: gha-${{ matrix.PYTHON_VERSION }}-unit-${{ matrix.os }}
+      env:
+        OS: ${{ matrix.os }}
+        PYTHON: ${{ matrix.PYTHON_VERSION }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        slug: ${{ github.repository }}
+
+
+    - name: Upload integration-test coverage to Codecov
+      uses: codecov/codecov-action@v5  # https://github.com/codecov/codecov-action
+      if: ${{ github.ref_name == 'main' || github.event_name == 'pull_request' }}
+      with:
+        files: .temp/coverage-integration.xml
+        flags: integration
+        env_vars: OS,PYTHON
+        name: gha-${{ matrix.PYTHON_VERSION }}-int-${{ matrix.os }}
+      env:
+        OS: ${{ matrix.os }}
+        PYTHON: ${{ matrix.PYTHON_VERSION }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        slug: ${{ github.repository }}
+
 
   ###########################################################
   publish-release:
