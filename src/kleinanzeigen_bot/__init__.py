@@ -64,6 +64,12 @@ class KleinanzeigenBot(WebScrapingMixin):
     def get_version(self) -> str:
         return __version__
 
+    def get_version2(self) -> str:
+        return __version__
+
+    def get_version3(self) -> str:
+        return __version__
+
     async def run(self, args:list[str]) -> None:
         self.parse_args(args)
         try:
